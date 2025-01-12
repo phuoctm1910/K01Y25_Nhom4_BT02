@@ -11,5 +11,7 @@ namespace K01Y25_Nhom4_BT02.Services.Interfaces
         Task<Course_Res?> GetByIdAsync(int id);
 
         Course_Res Update(int id, Course_UpdateReq req);
+        Task<List<Enrollment_Res?>> GetEnrollmentByCourseIdAsync(int id);
+        Task<bool> DeleteByIdAsync(int id);
     }
 }

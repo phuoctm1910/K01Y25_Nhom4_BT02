@@ -8,10 +8,6 @@ namespace K01Y25_Nhom4_BT02.DB
 {
     public partial class AppDbContext : DbContext
     {
-        public AppDbContext()
-        {
-        }
-
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {

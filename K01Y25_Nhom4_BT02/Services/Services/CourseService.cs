@@ -99,5 +99,35 @@ namespace K01Y25_Nhom4_BT02.Services.Services
                 return null; // Xử lý lỗi nếu có
             }
         }
+
+        public async Task<bool> DeleteByIdAsync(int id)
+        {
+            var course = _context.Courses.Find(id);
+            if (course == null)
+                return false;
+            var enrollment = _context.Enrollments.Where(e => e.Courseid == course.Courseid).ToList();
+            if (enrollment.Any())
+                return false;
+            _context.Courses.Remove(course);
+            _context.SaveChanges(); 
+            return true; 
+        }
+
+        public async Task<List<Enrollment_Res?>> GetEnrollmentByCourseIdAsync(int id)
+        {
+            var course = _context.Courses.Find(id);
+            var enrollments = await _context.Enrollments
+                .Where(c => c.Courseid == course.Courseid)
+                .Select(c => new Enrollment_Res
+                {
+                    Enrollmentid = c.Enrollmentid,
+                    Courseid = c.Courseid,
+                    Studentid = c.Studentid,
+                    Grade = c.Grade,
+                })
+                .ToListAsync();
+
+            return enrollments;
+        }
     }
 }

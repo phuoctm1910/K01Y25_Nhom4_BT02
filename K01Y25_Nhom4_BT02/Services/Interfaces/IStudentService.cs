@@ -14,5 +14,7 @@ namespace K01Y25_Nhom4_BT02.Services.Interfaces
 
         // Các phương thức khác
         Student_UpdateReq Update(int id, Student_UpdateReq req);
+        Task<List<Enrollment_Res?>> GetEnrollmentByCourseIdAsync(int id);
+        Task<bool> DeleteByIdAsync(int id);
     }
 }

@@ -12,7 +12,7 @@ namespace K01Y25_Nhom4_BT02.Models
 
 
         // Trường hợp thành công
-        public static ApiResponse<T> Success(T data, string? message)
+        public static ApiResponse<T> Success(T? data, string? message)
         {
             return new ApiResponse<T>
             {

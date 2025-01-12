@@ -38,8 +38,6 @@
   <ItemGroup>
     <Folder Include="Models\Request\Enrollment\" />
     <Folder Include="Models\Request\Student\" />
-    <Folder Include="Models\Respone\Enrollment\" />
-    <Folder Include="Models\Respone\Student\" />
   </ItemGroup>
 
 </Project>

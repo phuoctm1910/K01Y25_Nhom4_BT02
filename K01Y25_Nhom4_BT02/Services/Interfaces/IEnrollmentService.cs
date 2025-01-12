@@ -1,6 +1,6 @@
-﻿using K01Y25_Nhom4_BT02.Models.Respone;
-using K01Y25_Nhom4_BT02.Models.Request.Enrollment;
-using K01Y25_Nhom4_BT02.Models.Respone.Enrollment;
+﻿using K01Y25_Nhom4_BT02.Models.Request.Enrollment;
+using K01Y25_Nhom4_BT02.Models.Respone;
+using K01Y25_Nhom4_BT02.Models.Respone.Course;
 
 namespace K01Y25_Nhom4_BT02.Services.Interfaces
 {
@@ -13,7 +13,6 @@ namespace K01Y25_Nhom4_BT02.Services.Interfaces
 
         // Thêm phương thức Update
         Enrollment_Res Update(int id, Enrollment_UpdateReq req);
-
-
+        Task<bool> DeleteByIdAsync(int id);
     }
 }

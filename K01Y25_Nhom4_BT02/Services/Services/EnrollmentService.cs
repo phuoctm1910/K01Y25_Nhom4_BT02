@@ -4,10 +4,7 @@ using K01Y25_Nhom4_BT02.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using K01Y25_Nhom4_BT02.DB.Table;
 using K01Y25_Nhom4_BT02.Models.Request.Enrollment;
-using K01Y25_Nhom4_BT02.Models.Respone.Enrollment;
-using K01Y25_Nhom4_BT02.Services.Interfaces;
 using System.Diagnostics;
-
 namespace K01Y25_Nhom4_BT02.Services.Services
 {
     public class EnrollmentService : IEnrollmentService
@@ -109,6 +106,15 @@ namespace K01Y25_Nhom4_BT02.Services.Services
                 return null; // Trả về null nếu có lỗi
             }
         }
+        public async Task<bool> DeleteByIdAsync(int id)
+        {
+            var enrollment = _context.Enrollments.Find(id);
+            if (enrollment == null)
+                return false;
+            _context.Enrollments.Remove(enrollment);
+            _context.SaveChanges();
+            return true;
 
+        }
     }
 }

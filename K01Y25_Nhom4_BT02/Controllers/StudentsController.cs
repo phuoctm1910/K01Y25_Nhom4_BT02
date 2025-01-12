@@ -3,6 +3,8 @@ using K01Y25_Nhom4_BT02.Models;
 using K01Y25_Nhom4_BT02.Services.Interfaces;
 using K01Y25_Nhom4_BT02.Models.Request.Student;
 using K01Y25_Nhom4_BT02.Models.Respone.Course;
+using K01Y25_Nhom4_BT02.Models;
+using K01Y25_Nhom4_BT02.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -76,9 +78,24 @@ namespace K01Y25_Nhom4_BT02.Controllers
 
 
         [HttpDelete("delete/{id}")]
-        public IActionResult DeleteStudents(int id)
+        public async Task<IActionResult> DeleteStudentsAsync(int id)
         {
-            return Ok();
+            var isDeleted = await _studentService.DeleteByIdAsync(id);
+
+            if (!isDeleted)
+            {
+                var isEnrollment = await _studentService.GetEnrollmentByCourseIdAsync(id);
+                if (isEnrollment != null && isEnrollment.Any())
+                {
+                    return BadRequest(ApiResponse<object>.Fail("Không thể xóa học viên này vì học viên đang trong một khóa học."));
+                }
+                else
+                {
+                    return NotFound(ApiResponse<object>.Fail("Không tìm thấy học viên với ID được cung cấp."));
+                }
+            }
+
+            return Ok(ApiResponse<object>.Success(null, "Xóa học viên thành công."));
         }
     }
 }

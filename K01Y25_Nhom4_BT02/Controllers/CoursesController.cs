@@ -83,9 +83,24 @@ namespace K01Y25_Nhom4_BT02.Controllers
     
 
         [HttpDelete("delete/{id}")]
-        public IActionResult DeleteCourse(int id)
+        public async Task<IActionResult> DeleteCourse(int id)
         {
-            return Ok();
+            var isDeleted = await _courseService.DeleteByIdAsync(id);
+
+            if (!isDeleted)
+            {
+                var isEnrollment = await _courseService.GetEnrollmentByCourseIdAsync(id);
+                if (isEnrollment != null && isEnrollment.Any())
+                {
+                    return BadRequest(ApiResponse<object>.Fail("Không thể xóa khóa học vì có sinh viên đang tham gia khóa học này."));
+                }
+                else
+                {
+                    return NotFound(ApiResponse<object>.Fail("Không tìm thấy khóa học với ID được cung cấp."));
+                }
+            }
+
+            return Ok(ApiResponse<object>.Success(null, "Xóa khóa học thành công."));
         }
     }
 }
