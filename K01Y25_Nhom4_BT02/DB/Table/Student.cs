@@ -13,7 +13,7 @@ namespace K01Y25_Nhom4_BT02.DB.Table
         public int Id { get; set; }
         public string Lastname { get; set; } = null!;
         public string Firstmidname { get; set; } = null!;
-        public DateOnly Enrollmentdate { get; set; }
+        public DateTime Enrollmentdate { get; set; }
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
