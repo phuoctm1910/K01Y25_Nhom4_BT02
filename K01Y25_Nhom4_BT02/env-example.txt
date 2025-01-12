@@ -1,0 +1,5 @@
+﻿DATABASE_HOST=localhost
+DATABASE_PORT=port
+DATABASE_USER=username
+DATABASE_PASSWORD=password
+DATABASE_NAME=database
