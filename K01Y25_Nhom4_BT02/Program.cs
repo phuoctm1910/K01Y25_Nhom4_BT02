@@ -50,7 +50,11 @@ namespace K01Y25_Nhom4_BT02
             });
 
             // Register services with built-in DI
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+               .AddNewtonsoftJson(options =>
+               {
+                   options.SerializerSettings.DateFormatString = "dd-MM-yyyy";
+               });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
