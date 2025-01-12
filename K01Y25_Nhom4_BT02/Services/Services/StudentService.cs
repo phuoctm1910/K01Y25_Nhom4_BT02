@@ -26,5 +26,22 @@ namespace K01Y25_Nhom4_BT02.Services.Services
 
             return student;
         }
+        public async Task<Student_Res?> GetByIdAsync(int id)
+        {
+            // Tìm khóa học theo ID
+            var student = await _context.Students
+                .Where(s => s.Id == id)
+                .Select(s => new Student_Res
+                {
+                    Id = s.Id,
+                    Lastname = s.Lastname,
+                    Firstmidname = s.Firstmidname,
+                    Enrollmentdate = s.Enrollmentdate
+                })
+                .FirstOrDefaultAsync();
+
+            return student;
+        }
+
     }
 }

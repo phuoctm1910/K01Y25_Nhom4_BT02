@@ -31,7 +31,7 @@ namespace K01Y25_Nhom4_BT02.Controllers
             var course = await _courseService.GetByIdAsync(id);
             if (course == null)
             {
-                return Ok(ApiResponse<object>.Fail("Không tìm thấy khóa học với ID được cung cấp."));
+                return Ok(ApiResponse<object>.Fail("Không tìm thấy thông tin khóa học."));
             }
 
             return Ok(ApiResponse<Course_Res>.Success(course, "Lấy thông tin khóa học thành công."));

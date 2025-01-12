@@ -3,6 +3,7 @@ using K01Y25_Nhom4_BT02.Models;
 using K01Y25_Nhom4_BT02.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using K01Y25_Nhom4_BT02.Models.Respone;
 
 namespace K01Y25_Nhom4_BT02.Controllers
 {
@@ -25,9 +26,16 @@ namespace K01Y25_Nhom4_BT02.Controllers
         }
 
         [HttpGet("getbyid/{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return Ok();
+
+            var student = await _studentService.GetByIdAsync(id);
+            if (student == null)
+            {
+                return Ok(ApiResponse<object>.Fail("Không tìm thấy thông tin học sinh."));
+            }
+
+            return Ok(ApiResponse<Student_Res>.Success(student, "Lấy thông tin học sinh thành công."));
         }
 
         [HttpPost("create")]
