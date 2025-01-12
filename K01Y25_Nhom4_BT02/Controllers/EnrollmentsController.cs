@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using K01Y25_Nhom4_BT02.DB.Table;
+using K01Y25_Nhom4_BT02.Models.Respone.Course;
+using K01Y25_Nhom4_BT02.Models;
+using K01Y25_Nhom4_BT02.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace K01Y25_Nhom4_BT02.Controllers
@@ -7,6 +11,13 @@ namespace K01Y25_Nhom4_BT02.Controllers
     [ApiController]
     public class EnrollmentsController : ControllerBase
     {
+        private readonly IEnrollmentService _enrollmentService;
+
+        public EnrollmentsController(IEnrollmentService enrollmentService)
+        {
+            _enrollmentService = enrollmentService;
+        }
+
         [HttpGet("getAll")]
         public IActionResult GetAll()
         {
@@ -34,9 +45,15 @@ namespace K01Y25_Nhom4_BT02.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        public IActionResult DeleteEnrollments(int id)
+        public async Task<IActionResult> DeleteEnrollmentsAsync(int id)
         {
-            return Ok();
+            var isDelete = await _enrollmentService.DeleteByIdAsync(id);
+            if (!isDelete)
+            {
+                return Ok(ApiResponse<object>.Fail("Xóa không thành công"));
+            }
+
+            return Ok(ApiResponse<Course_Res>.Success(null, "Xóa thành công"));
         }
     }
 }
