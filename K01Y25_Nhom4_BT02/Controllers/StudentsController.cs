@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using K01Y25_Nhom4_BT02.Models.Respone;
+using K01Y25_Nhom4_BT02.Models;
+using K01Y25_Nhom4_BT02.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace K01Y25_Nhom4_BT02.Controllers
@@ -7,10 +10,18 @@ namespace K01Y25_Nhom4_BT02.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        [HttpGet("getAll")]
-        public IActionResult GetAll()
+        private readonly IStudentService _studentService;
+
+        public StudentsController(IStudentService studentService)
         {
-            return Ok();
+            _studentService = studentService;
+        }
+
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            var student = await _studentService.GetAllAsync();
+            return Ok(ApiResponse<IEnumerable<Student_Res>>.Success(student, "Lấy danh sách học sinh thành công."));
         }
 
         [HttpGet("getbyid/{id}")]
