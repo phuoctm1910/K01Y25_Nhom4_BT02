@@ -1,6 +1,7 @@
 ﻿using K01Y25_Nhom4_BT02.Models;
 using K01Y25_Nhom4_BT02.Models.Respone;
 using K01Y25_Nhom4_BT02.Services.Interfaces;
+using K01Y25_Nhom4_BT02.Models.Request.Enrollment;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,9 +39,14 @@ namespace K01Y25_Nhom4_BT02.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult CreateEnrollments([FromBody] string value)
+        public IActionResult CreateEnrollments([FromBody] Enrollment_CreateReq req)
         {
-            return Ok();
+            if (req == null) { return BadRequest(ApiResponse<Enrollment_Res>.Fail("Tạo mới thất bại."));  }
+
+            var Enrollment = _enrollmentService.Create(req);
+            if (Enrollment == null) { return BadRequest(ApiResponse<Enrollment_Res>.Fail("Tạo mới thất bại."));  }
+
+            return Ok(ApiResponse<Enrollment_CreateReq>.Success(Enrollment, "Tạo mới thành công."));
 
         }
 
