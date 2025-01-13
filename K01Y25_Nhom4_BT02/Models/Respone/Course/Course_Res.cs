@@ -2,9 +2,9 @@
 {
     public class Course_Res
     {
-        public int Courseid { get; set; }
-        public string Title { get; set; } = null!;
-        public double Credits { get; set; }
+        public int Courseid { get; internal set; }
+        public string? Title { get; internal set; }
+        public double Credits { get; internal set; }
 
     }
 }
