@@ -37,7 +37,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Request\Enrollment\" />
-    <Folder Include="Models\Request\Course\" />
     <Folder Include="Models\Request\Student\" />
   </ItemGroup>
 

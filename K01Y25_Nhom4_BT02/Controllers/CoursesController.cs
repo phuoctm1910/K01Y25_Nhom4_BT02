@@ -2,6 +2,8 @@
 using K01Y25_Nhom4_BT02.Models;
 using Microsoft.AspNetCore.Mvc;
 using K01Y25_Nhom4_BT02.Services.Interfaces;
+using K01Y25_Nhom4_BT02.Models.Request.Course;
+using K01Y25_Nhom4_BT02.DB.Table;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +14,9 @@ namespace K01Y25_Nhom4_BT02.Controllers
     public class CoursesController : ControllerBase
     {
         private readonly ICourseService _courseService;
+
+        public int Courseid { get; private set; }
+        public double Credits { get; private set; }
 
         public CoursesController(ICourseService courseService)
         {
@@ -38,10 +43,24 @@ namespace K01Y25_Nhom4_BT02.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult CreateCourse([FromBody] string value)
+        public IActionResult CreateCourse([FromBody] Course_CreateReq request)
         {
-            return Ok();
+            if (request == null)
+            {
+                return BadRequest(ApiResponse<Course_Res>.Fail("Tạo mới thất bại."));
+            }
 
+            // Gọi service để tạo mới khóa học
+            var result = _courseService.Create(request);
+
+            // Kiểm tra kết quả trả về
+            if (result == null)
+            {
+                return BadRequest(ApiResponse<Course_Res>.Fail("Tạo mới thất bại."));
+            }
+
+            // Trả về kết quả thành công
+            return Ok(ApiResponse<Course_CreateReq>.Success(result, "Tạo mới thành công."));
         }
 
         [HttpPut("update/{id}")]
