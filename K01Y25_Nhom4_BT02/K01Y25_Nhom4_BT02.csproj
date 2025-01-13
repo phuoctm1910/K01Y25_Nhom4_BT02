@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Respone\Enrollment\**" />
+    <Compile Remove="Models\Respone\Student\**" />
+    <Content Remove="Models\Respone\Enrollment\**" />
+    <Content Remove="Models\Respone\Student\**" />
+    <EmbeddedResource Remove="Models\Respone\Enrollment\**" />
+    <EmbeddedResource Remove="Models\Respone\Student\**" />
+    <None Remove="Models\Respone\Enrollment\**" />
+    <None Remove="Models\Respone\Student\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="8.2.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageReference Include="DotNetEnv" Version="3.1.1" />
@@ -28,8 +39,6 @@
     <Folder Include="Models\Request\Enrollment\" />
     <Folder Include="Models\Request\Course\" />
     <Folder Include="Models\Request\Student\" />
-    <Folder Include="Models\Respone\Enrollment\" />
-    <Folder Include="Models\Respone\Student\" />
   </ItemGroup>
 
 </Project>
