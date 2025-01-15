@@ -64,11 +64,23 @@ namespace K01Y25_Nhom4_BT02.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public IActionResult UpdateCourse(int id, [FromBody] string value)
+        public IActionResult UpdateCourse(int id, [FromBody] Course_UpdateReq req)
         {
-            return Ok();
+            if (req == null)
+            {
+                return BadRequest(ApiResponse<object>.Fail("Dữ liệu cập nhật không hợp lệ."));
+            }
 
+            var updatedCourse = _courseService.Update(id, req);
+
+            if (updatedCourse == null)
+            {
+                return NotFound(ApiResponse<object>.Fail("Không tìm thấy khóa học để cập nhật."));
+            }
+
+            return Ok(ApiResponse<Course_UpdateRes>.Success(updatedCourse, "Cập nhật khóa học thành công."));
         }
+    
 
         [HttpDelete("delete/{id}")]
         public IActionResult DeleteCourse(int id)

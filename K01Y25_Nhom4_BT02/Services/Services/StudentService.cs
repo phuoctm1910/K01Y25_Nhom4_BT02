@@ -16,7 +16,7 @@ namespace K01Y25_Nhom4_BT02.Services.Services
         {
             try
             {
-                if(req == null) { return null; }
+                if (req == null) { return null; }
 
                 var newStudent = new Student()
                 {
@@ -34,9 +34,42 @@ namespace K01Y25_Nhom4_BT02.Services.Services
             }
         }
 
+        // Hàm Update
+        public Student_UpdateReq Update(int id, Student_UpdateReq req)
+        {
+            try
+            {
+                // Tìm sinh viên theo ID
+                var student = _context.Students.FirstOrDefault(s => s.Id == id);
+
+                if (student == null)
+                {
+                    return null; // Sinh viên không tìm thấy
+                }
+
+                // Cập nhật thông tin sinh viên
+                student.Lastname = req.Lastname;
+                student.Firstmidname = req.Firstmidname;
+                student.Enrollmentdate = (DateTime)req.Enrollmentdate;
+
+                // Lưu lại thay đổi
+                _context.SaveChanges();
+
+                // Trả về đối tượng Student_UpdateReq sau khi đã cập nhật thành công
+                return req;
+            }
+            catch
+            {
+                return null; // Xử lý lỗi nếu có
+            }
+        }
+
         private object Student()
         {
             throw new NotImplementedException();
         }
+
+
+
     }
 }

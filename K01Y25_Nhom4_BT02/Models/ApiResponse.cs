@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using K01Y25_Nhom4_BT02.Models.Request.Student;
+using Microsoft.AspNetCore.Mvc;
 
 namespace K01Y25_Nhom4_BT02.Models
 {
@@ -35,7 +36,10 @@ namespace K01Y25_Nhom4_BT02.Models
             };
         }
 
-
+        internal static object? Success(Student_UpdateReq updatedStudent, string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
