@@ -67,5 +67,37 @@ namespace K01Y25_Nhom4_BT02.Services.Services
             return course;
         }
 
+        public Course_Res Update(int id, Course_UpdateReq req)
+        {
+            try
+            {
+                // Tìm khóa học cần cập nhật
+                var course = _context.Courses.FirstOrDefault(c => c.Courseid == id);
+
+                if (course == null)
+                {
+                    return null; // Không tìm thấy khóa học
+                }
+
+                // Cập nhật thông tin khóa học
+                course.Title = req.Title;
+                course.Credits = req.Credits;
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                _context.SaveChanges();
+
+                // Trả về kết quả cập nhật
+                return new Course_Res
+                {
+                    Courseid = course.Courseid,
+                    Title = course.Title,
+                    Credits = course.Credits
+                };
+            }
+            catch
+            {
+                return null; // Xử lý lỗi nếu có
+            }
+        }
     }
 }

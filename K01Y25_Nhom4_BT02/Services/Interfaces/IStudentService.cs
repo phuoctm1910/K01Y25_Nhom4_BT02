@@ -10,5 +10,9 @@ namespace K01Y25_Nhom4_BT02.Services.Interfaces
 
         Task<IEnumerable<Student_Res>> GetAllAsync();
         Student_CreateReq Create(Student_CreateReq req);
+
+
+        // Các phương thức khác
+        Student_UpdateReq Update(int id, Student_UpdateReq req);
     }
 }

@@ -50,11 +50,23 @@ namespace K01Y25_Nhom4_BT02.Controllers
 
         }
 
+       
         [HttpPut("update/{id}")]
-        public IActionResult UpdateEnrollments(int id, [FromBody] string value)
+        public IActionResult UpdateEnrollments(int id, [FromBody] Enrollment_UpdateReq request)
         {
-            return Ok();
+            if (request == null)
+            {
+                return BadRequest(ApiResponse<object>.Fail("Dữ liệu cập nhật không hợp lệ."));
+            }
 
+            var updatedEnrollment = _enrollmentService.Update(id, request);
+
+            if (updatedEnrollment == null)
+            {
+                return NotFound(ApiResponse<object>.Fail("Không tìm thấy bản ghi để cập nhật."));
+            }
+
+            return Ok(ApiResponse<Enrollment_Res>.Success(updatedEnrollment, "Cập nhật thành công."));
         }
 
         [HttpDelete("delete/{id}")]

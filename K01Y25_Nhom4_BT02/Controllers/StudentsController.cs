@@ -52,11 +52,28 @@ namespace K01Y25_Nhom4_BT02.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public IActionResult UpdateStudents(int id, [FromBody] string value)
+        public IActionResult UpdateStudents(int id, [FromBody] Student_UpdateReq request)
         {
-            return Ok();
+            // Kiểm tra nếu request là null
+            if (request == null)
+            {
+                return BadRequest(ApiResponse<object>.Fail("Cập nhật thất bại. Dữ liệu không hợp lệ."));
+            }
 
+            // Sử dụng service để thực hiện cập nhật
+            var updatedStudent = _studentService.Update(id, request);
+
+            // Kiểm tra nếu không tìm thấy sinh viên hoặc cập nhật thất bại
+            if (updatedStudent == null)
+            {
+                return BadRequest(ApiResponse<object>.Fail("Cập nhật thất bại. Không tìm thấy sinh viên để cập nhật."));
+            }
+
+            // Trả về phản hồi thành công
+            return Ok(ApiResponse<Student_Res>.Success(updatedStudent, "Cập nhật sinh viên thành công."));
         }
+
+
 
         [HttpDelete("delete/{id}")]
         public IActionResult DeleteStudents(int id)

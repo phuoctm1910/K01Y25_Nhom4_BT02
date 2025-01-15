@@ -4,6 +4,9 @@ using K01Y25_Nhom4_BT02.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using K01Y25_Nhom4_BT02.DB.Table;
 using K01Y25_Nhom4_BT02.Models.Request.Enrollment;
+using K01Y25_Nhom4_BT02.Models.Respone.Enrollment;
+using K01Y25_Nhom4_BT02.Services.Interfaces;
+using System.Diagnostics;
 
 namespace K01Y25_Nhom4_BT02.Services.Services
 {
@@ -70,6 +73,42 @@ namespace K01Y25_Nhom4_BT02.Services.Services
                 return null;
             }
         }
-       
+
+        public Enrollment_Res Update(int id, Enrollment_UpdateReq req)
+        {
+            try
+            {
+                // Tìm bản ghi Enrollment dựa trên id
+                var enrollment = _context.Enrollments.FirstOrDefault(e => e.Enrollmentid == id);
+
+                if (enrollment == null)
+                {
+                    return null; // Trả về null nếu không tìm thấy
+                }
+
+                // Cập nhật các trường dữ liệu
+                enrollment.Courseid = req.Courseid;
+                enrollment.Studentid = req.Studentid;
+                enrollment.Grade = (decimal)req.Grade;
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                _context.SaveChanges();
+
+                // Trả về kết quả cập nhật
+                return new Enrollment_Res
+                {
+                    Enrollmentid = enrollment.Enrollmentid,
+                    Courseid = enrollment.Courseid,
+                    Studentid = enrollment.Studentid,
+                    Grade = enrollment.Grade
+                };
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error updating enrollment: {ex.Message}");
+                return null; // Trả về null nếu có lỗi
+            }
+        }
+
     }
 }
