@@ -102,32 +102,30 @@ namespace K01Y25_Nhom4_BT02.Services.Services
 
         public async Task<bool> DeleteByIdAsync(int id)
         {
-            var course = _context.Courses.Find(id);
+            var course = await _context.Courses.FindAsync(id);
             if (course == null)
-                return false;
-            var enrollment = _context.Enrollments.Where(e => e.Courseid == course.Courseid).ToList();
-            if (enrollment.Any())
-                return false;
-            _context.Courses.Remove(course);
-            _context.SaveChanges(); 
-            return true; 
-        }
+            {
+                return false; 
+            }
 
-        public async Task<List<Enrollment_Res?>> GetEnrollmentByCourseIdAsync(int id)
-        {
-            var course = _context.Courses.Find(id);
             var enrollments = await _context.Enrollments
-                .Where(c => c.Courseid == course.Courseid)
-                .Select(c => new Enrollment_Res
-                {
-                    Enrollmentid = c.Enrollmentid,
-                    Courseid = c.Courseid,
-                    Studentid = c.Studentid,
-                    Grade = c.Grade,
-                })
+                .Where(e => e.Courseid == id)
                 .ToListAsync();
 
-            return enrollments;
+            if (enrollments.Any())
+            {
+                return false; 
+            }
+
+            _context.Courses.Remove(course);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<IEnumerable<Enrollment>> GetEnrollmentByCourseIdAsync(int courseId)
+        {
+            return await _context.Enrollments
+                .Where(e => e.Courseid == courseId)
+                .ToListAsync();
         }
     }
 }

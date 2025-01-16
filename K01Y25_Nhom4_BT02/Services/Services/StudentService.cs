@@ -113,21 +113,11 @@ namespace K01Y25_Nhom4_BT02.Services.Services
             return true;
         }
 
-        public async Task<List<Enrollment_Res?>> GetEnrollmentByCourseIdAsync(int id)
+        public async Task<IEnumerable<Enrollment>> GetEnrollmentByCourseIdAsync(int id)
         {
-            var student = _context.Students.Find(id);
-            var enrollments = await _context.Enrollments
-                .Where(c => c.Studentid == student.Id)
-                .Select(c => new Enrollment_Res
-                {
-                    Enrollmentid = c.Enrollmentid,
-                    Courseid = c.Courseid,
-                    Studentid = c.Studentid,
-                    Grade = c.Grade,
-                })
-                .ToListAsync();
-
-            return enrollments;
+            return await _context.Enrollments
+         .Where(e => e.Courseid == id)
+         .ToListAsync();
         }
 
     }

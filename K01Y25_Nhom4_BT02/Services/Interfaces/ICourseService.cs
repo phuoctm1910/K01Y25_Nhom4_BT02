@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using K01Y25_Nhom4_BT02.DB.Table;
 using K01Y25_Nhom4_BT02.Models.Request.Course;
 using K01Y25_Nhom4_BT02.Models.Respone;
 
@@ -11,7 +12,7 @@ namespace K01Y25_Nhom4_BT02.Services.Interfaces
         Task<Course_Res?> GetByIdAsync(int id);
 
         Course_Res Update(int id, Course_UpdateReq req);
-        Task<List<Enrollment_Res?>> GetEnrollmentByCourseIdAsync(int id);
+        Task<IEnumerable<Enrollment>> GetEnrollmentByCourseIdAsync(int courseId);
         Task<bool> DeleteByIdAsync(int id);
     }
 }
